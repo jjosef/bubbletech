@@ -17,10 +17,12 @@ services:
       context: .
     environment:
       - PORT=8080
+      - NODE_ENV=dev
       - WAIT_HOSTS=mongodb:27017
       - WAIT_HOSTS_TIMEOUT=300
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
+      - GOOGLE_APPLICATION_CREDENTIALS="./google-credentials.json"
     restart: unless-stopped
     ports:
       - 8080:8080
