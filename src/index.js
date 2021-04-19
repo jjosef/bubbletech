@@ -1,11 +1,14 @@
-const { gae_loader } = require('./util/gae');
+import { gae_loader } from './util/gae.js';
 gae_loader();
 
-const express = require('express');
-const { json } = require('body-parser');
-const cors = require('cors');
+import express from 'express';
+import bp from 'body-parser';
+import cors from 'cors';
 
-const { routes } = require('./routes.js')
+import { db } from './config/db.js';
+import { routes } from './routes.js';
+
+const { json } = bp;
 
 const app = express();
 app.use(json());
@@ -21,7 +24,14 @@ for (const i in routes) {
 }
 
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-  console.log('Press Ctrl+C to quit.');
+db.on('error', (err) => {
+  console.error(err);
+  process.exit(37707);
+});
+db.once('open', () => {
+  console.log(`Connected to DB mongodb://${db.host}:${db.port}`);
+  app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+    console.log('Press Ctrl+C to quit.');
+  });
 });

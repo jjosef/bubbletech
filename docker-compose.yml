@@ -23,14 +23,15 @@ services:
       - WAIT_SLEEP_INTERVAL=30
       - WAIT_HOST_CONNECT_TIMEOUT=30
       - GOOGLE_APPLICATION_CREDENTIALS="./google-credentials.json"
+      - MONGOOSE_CONNECT_URL="mongodb://root:password@mongodb:27017"
     restart: unless-stopped
     ports:
       - 8080:8080
     volumes:
-      - .:/code
+      - ./src:/code/src
     depends_on:
       - mongodb
-    command: sh -c "/wait && yarn start"
+    command: sh -c "/wait && yarn dev"
 
 volumes:
   mongodb_data_container:
