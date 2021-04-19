@@ -10,7 +10,7 @@
     "dev": "GOOGLE_APPLICATION_CREDENTIALS='./google-credentials.json' nodemon src/index.js",
     "lint": "prettier --write 'src/**/*.js'",
     "start": "node src/index.js",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "prepare": "husky install"
   },
   "engines": {
